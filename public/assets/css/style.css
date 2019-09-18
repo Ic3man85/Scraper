@@ -1,3 +1,92 @@
-.articles {
+
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
     background-color: #EDF5E1;
+}
+
+.header {
+    width: 100%;
+    height: 175px;
+    background-color: #376e6f;
+}
+
+.header h1 {
+    
+    text-align: center;
+    font-size: 100px;
+}
+
+.header p {
+    text-align: center;
+    font-size: 25px;
+}
+
+.main-articles {
+    width: 90%;
+    margin: 0 auto;
+    background-color: #a4b3b6;
+    padding: 10px;
+    border-right: 2px solid black;
+    border-left: 2px solid black;
+}
+
+h2 {
+    font-size: 50px;
+    font-weight: bolder;
+}
+
+.articles {
+    margin: 10px 0px 10px 0px;
+    padding: 15px;
+    box-shadow: inset 0px 0px 2px 2px black;
+}
+
+.articles h3 {
+    font-size: 25px;
+    font-weight: bolder;
+    margin-bottom: 10px;
+}
+
+.articles p {
+    font-size: 20px;
+    line-height: 1;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.articles a {
+    font-size: 20px;
+}
+
+.buttons {
+    margin-top: 15px;
+    /* padding: 5px; */
+}
+
+.save-article {
+    margin: 5px;
+    width: 150px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: #44318d;
+    font-weight: bolder;
+    font-size: 20px;
+    text-shadow: 2px 2px 5px #a4b3b6;
+}
+
+.note-article {
+    margin: 5px;
+    width: 150px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: #44318d;
+    font-weight: bolder;
+    font-size: 20px;
+    text-shadow: 2px 2px 5px #a4b3b6;
 }

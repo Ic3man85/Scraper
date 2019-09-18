@@ -63,7 +63,7 @@ app.get("/scrape-main", function (req, res) {
             let result = {};
 
             result.title = $(this).find("h2").text();
-            result.link = "https://www.ksl.com/" + $(this).find("a").attr("href");
+            result.link = "https://www.ksl.com" + $(this).find("a").attr("href");
             result.body = $(this).find("h5").text();
 
             db.Article.create(result)
