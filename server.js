@@ -93,9 +93,9 @@ app.get("/scrape-outdoor", function (req, res) {
             result.link = "https://www.ksl.com/news/outdoors" + $(this).find("a").attr("href");
             result.body = $(this).find("h5").text();
 
-            db.Article.create(result)
-                .then(function (dbArticle) {
-                    console.log(dbArticle);
+            db.Outdoor.create(result)
+                .then(function (dbOutdoor) {
+                    console.log(dbOutdoor);
                 })
                 .catch(function (err) {
                     if (err) {
@@ -120,9 +120,9 @@ app.get("/scrape-entertainment", function (req, res) {
             result.link = "https://www.ksl.com/news/entertainment" + $(this).find("a").attr("href");
             result.body = $(this).find("h5").text();
 
-            db.Article.create(result)
-                .then(function (dbArticle) {
-                    console.log(dbArticle);
+            db.Entertainment.create(result)
+                .then(function (dbEntertainment) {
+                    console.log(dbEntertainment);
                 })
                 .catch(function (err) {
                     if (err) {
