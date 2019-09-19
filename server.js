@@ -35,8 +35,10 @@ app.listen(PORT, function () {
     console.log("App running on port " + PORT + "!");
 });
 
+// GET ROUTES //////
+
 app.get("/", function (req, res) {
-    db.Article.find({})
+    db.Article.find({"saved": false})
         .then(function (data) {
 
             let hbsObject = {
@@ -177,6 +179,8 @@ app.post("/articles/:id", function (req, res) {
             res.json(err);
         });
 });
+
+//////  POST ROUTES /////
 
 
 

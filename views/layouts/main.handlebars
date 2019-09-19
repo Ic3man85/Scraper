@@ -13,10 +13,19 @@
 <body>
     <header class="header">
         <h1>Utah News Scraper</h1>
-        <p>Scraping three topics of articles that interested me, so scroll through.
-            If you see one you like just click on the heading text, and you should be
-            able to leave a comment on the article.</p>
+        <p>Choose which news topic you would like to scrape, and just simply push the button!!</p>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><button id="main-scraper-btn" onclick=scrapeMain()>Main</button></li>
+                <li><button id="outdoor-scraper-btn" onclick=scrapeOutdoor()>Outdoor</button></li>
+                <li><button id="entertainment-scraper-btn" onclick=scrapeEntertainment()>Entertainment</button></li>
+                <li><button id="delete-unsaved-btn">Delete Unsaved</button></li>
+                <li><a href="/savedArticles">Saved Articles</a></li>
+            </ul>
+        </nav>
     </header>
+
     {{{body}}}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
