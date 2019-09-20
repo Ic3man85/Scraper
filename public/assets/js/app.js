@@ -1,6 +1,5 @@
 $("#main-scraper-btn").on("click", function() {
 
-    $(".main-container").empty();
     $.ajax({
         method: "GET",
         url: "/scrape-main",
@@ -11,7 +10,6 @@ $("#main-scraper-btn").on("click", function() {
 });
 $("#outdoor-scraper-btn").on("click", function() {
 
-    $(".main-container").empty();
     $.ajax({
         method: "GET",
         url: "/scrape-outdoor",
@@ -22,7 +20,6 @@ $("#outdoor-scraper-btn").on("click", function() {
 });
 $("#entertainment-scraper-btn").on("click", function() {
 
-    $(".main-container").empty();
     $.ajax({
         method: "GET",
         url: "/scrape-entertainment",
@@ -33,7 +30,25 @@ $("#entertainment-scraper-btn").on("click", function() {
 });
 
 $('#save').on("click",function() {
-     $.ajax({
-         
-     })
-})
+
+    let newId = $(this).attr("data-id");
+    $.ajax({
+         method: "POST",
+         url: "/articles/saved/" + newId
+    }).done(function(data) {
+        console.log(data)
+        window.location = "/"
+    });
+});
+
+$('#delete-unsaved').on("click",function(){
+
+    let newId = $(this).attr("data-id");
+    $.ajax({
+        method: "GET",
+        url: "/clear"
+    }).done(function(data) {
+        console.log("CLEARED");
+        window.location = "/"
+    });
+});

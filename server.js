@@ -35,10 +35,12 @@ app.listen(PORT, function () {
     console.log("App running on port " + PORT + "!");
 });
 
-// GET ROUTES //////
+// MAIN ROUTES //////
 
 app.get("/", function (req, res) {
-    db.Article.find({"saved": false})
+
+    
+    db.Article.find({ "saved": false })
         .then(function (data) {
 
             let hbsObject = {
@@ -47,12 +49,54 @@ app.get("/", function (req, res) {
             console.log(hbsObject);
             res.render("index", hbsObject);
         })
-        .catch(function(err) {
-            if(err) {
+        .catch(function (err) {
+            if (err) {
                 res.json(err);
             }
         });
+    
 });
+
+app.get("/saved", function (req, res) {
+
+    db.Article.find({ "saved": true })
+        .populate("notes")
+        .then(function (data) {
+            let hbsObject = {
+                article: data
+            };
+            console.log(hbsObject);
+            res.render("saved", hbsObject);
+        });
+});
+
+app.get("/clear", function (req, res) {
+
+    db.Article.remove({ "saved": false })
+        .then(function (err, data) {
+            if (err) {
+                console.log(err);
+            }
+            console.log("removed")
+        });
+    db.Outdoor.remove({ "saved": false })
+        .then(function (err, data) {
+            if (err) {
+                console.log(err);
+            }
+            console.log("removed")
+        });
+    db.Entertainment.remove({ "saved": false })
+        .then(function (err, data) {
+            if (err) {
+                console.log(err);
+            }
+            console.log("removed");
+            res.redirect("/");
+        });
+});
+
+// ///////SCRAPES///////////
 
 app.get("/scrape-main", function (req, res) {
 
@@ -148,37 +192,20 @@ app.get("/articles", function (req, res) {
         });
 });
 
-app.get("/articles/:id", function (req, res) {
+app.post("/articles/saved/:id", function (req, res) {
 
-    db.Article.findOne({ _id: req.body.id })
-        .populate("note")
+    db.Article.findOneAndUpdate({ "_id": req.params.id }, { "saved": true })
         .then(function (dbArticle) {
 
-            res.json(dbArticle);
+            res.send(dbArticle);
         })
         .catch(function (err) {
             if (err) {
-                res.json(err);
+                console.log(err);
             }
         });
 });
 
-app.post("/articles/:id", function (req, res) {
-
-    db.Note.create(req.body)
-        .then(function (dbNote) {
-
-            return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
-        })
-        .then(function (dbArticle) {
-
-            res.json(dbArticle);
-        })
-        .catch(function (err) {
-
-            res.json(err);
-        });
-});
 
 //////  POST ROUTES /////
 
