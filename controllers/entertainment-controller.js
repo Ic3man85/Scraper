@@ -1,26 +1,26 @@
 let express = require('express');
-let Article = require("../models/Article");
+let Entertainment = require("../models/Entertainment");
 let cheerio = require('cheerio');
 let axios = require('axios');
 
 let router = express.Router();
 
-router.get("/articles", function (req, res) {
+router.get("/entertainment", function (req, res) {
 
-    Article.find({ "saved": false })
+    Entertainment.find({ "saved": false })
         .then(function (data) {
 
             let hbsObject = {
                 article: data
             };
             console.log(hbsObject);
-            res.render("articles", hbsObject);
+            res.render("entertainment", hbsObject);
         });
 });
 
-router.get("/scrape-main", function (req, res) {
+router.get("/scrape-entertainment", function (req, res) {
 
-    axios.get("https://www.ksl.com/").then(function (response) {
+    axios.get("https://www.ksl.com/news/entertainment").then(function (response) {
 
         let $ = cheerio.load(response.data);
 
@@ -32,9 +32,9 @@ router.get("/scrape-main", function (req, res) {
             result.link = "https://www.ksl.com" + $(this).find("a").attr("href");
             result.body = $(this).find("h5").text();
 
-            Article.create(result)
-                .then(function (dbArticle) {
-                    console.log(dbArticle);
+            Entertainment.create(result)
+                .then(function (dbEntertainment) {
+                    console.log(dbEntertainment);
                 })
                 .catch(function (err) {
                     if (err) {
@@ -46,20 +46,24 @@ router.get("/scrape-main", function (req, res) {
     });
 });
 
-router.get("api/articles",function(req,res) {
+router.post("/saved/:id", function (req, res) {
 
-    Article.find({"saved": false})
-        .then(function(err,data) {
-            if(err) {
-                res.json(err);
-            }
-            res.send(data);
-        });
-});
+        Entertainment.findOneAndUpdate({ "_id": req.params.id }, { "saved": true })
+            .then(function (dbEntertainment) {
+    
+                res.send(dbEntertainment);
+            })
+            .catch(function (err) {
+                if (err) {
+                    console.log(err);
+                }
+            });
+    });
+    
 
 router.get("/saved", function (req, res) {
 
-    Article.find({ "saved": true })
+    Entertainment.find({ "saved": true })
         .populate("notes")
         .then(function (data) {
             let hbsObject = {
@@ -70,9 +74,9 @@ router.get("/saved", function (req, res) {
         });
 });
 
-router.get("/clear", function (req, res) {
+router.get("/entertainment/clear", function (req, res) {
 
-    Article.remove({ "saved": false })
+    Entertainment.remove({ "saved": false })
         .then(function (err, data) {
             if (err) {
                 console.log(err);

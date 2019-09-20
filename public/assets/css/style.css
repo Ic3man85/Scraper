@@ -6,7 +6,7 @@
 html, body {
     width: 100%;
     height: 100%;
-    background-color: #EDF5E1;
+    background-color: #6B6e70;
 }
 
 nav { 
@@ -18,16 +18,21 @@ ul {
     justify-content: space-around;
 }
 
-a {
+nav li {
+    margin-bottom: 10px;
+
+}
+
+nav a {
     position: relative;
     margin-top: 15px;
     color: black;
-    padding: 10px;
+    /* padding: 10px; */
     font-size: 25px;
     text-decoration: none;
 }
 
-li a:hover::after {
+nav li a:hover:before {
     content: " ";
     position: absolute;
     left: 0;
@@ -38,8 +43,8 @@ li a:hover::after {
 
 .header {
     width: 100%;
-    /* height: 175px; */
     background-color: #376e6f;
+    box-shadow: inset 0px 0px 5px 2px black;
 }
 
 .header h1 {
@@ -59,8 +64,7 @@ li a:hover::after {
     margin: 0 auto;
     background-color: #a4b3b6;
     padding: 10px;
-    border-right: 2px solid black;
-    border-left: 2px solid black;
+    border: 2px solid black;
 }
 
 h2 {
@@ -99,5 +103,14 @@ button {
     background-color: #44318d;
     font-weight: bolder;
     font-size: 20px;
-    text-shadow: 2px 2px 5px #a4b3b6;
+    text-shadow: 1px 0px 2px #a4b3b6;
+    border: 2px solid black;
+}
+
+.articles button {
+    margin-top: 20px;
+}
+
+#delete-unsaved {
+    margin-top: 30px;
 }

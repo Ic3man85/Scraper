@@ -1,26 +1,26 @@
 let express = require('express');
-let Outdoor = require("../models/Outdoor");
+let Article = require("../models/Article");
 let cheerio = require('cheerio');
 let axios = require('axios');
 
 let router = express.Router();
 
-router.get("/outdoor", function (req, res) {
+router.get("/news", function (req, res) {
 
-    Outdoor.find({ "saved": false })
+    Article.find({ "saved": false })
         .then(function (data) {
 
             let hbsObject = {
                 article: data
             };
             console.log(hbsObject);
-            res.render("outdoor", hbsObject);
+            res.render("news", hbsObject);
         });
 });
 
-router.get("/scrape-outdoor", function (req, res) {
+router.get("/scrape-main", function (req, res) {
 
-    axios.get("https://www.ksl.com/news/outdoors").then(function (response) {
+    axios.get("https://www.ksl.com/").then(function (response) {
 
         let $ = cheerio.load(response.data);
 
@@ -32,9 +32,9 @@ router.get("/scrape-outdoor", function (req, res) {
             result.link = "https://www.ksl.com" + $(this).find("a").attr("href");
             result.body = $(this).find("h5").text();
 
-            Outdoor.create(result)
-                .then(function (dbOutdoor) {
-                    console.log(dbOutdoor);
+            Article.create(result)
+                .then(function (dbArticle) {
+                    console.log(dbArticle);
                 })
                 .catch(function (err) {
                     if (err) {
@@ -46,10 +46,24 @@ router.get("/scrape-outdoor", function (req, res) {
     });
 });
 
+router.post("/saved/:id", function (req, res) {
+
+        Article.findOneAndUpdate({ "_id": req.params.id }, { "saved": true })
+            .then(function (dbArticle) {
+    
+                res.send(dbArticle);
+            })
+            .catch(function (err) {
+                if (err) {
+                    console.log(err);
+                }
+            });
+    });
+    
 
 router.get("/saved", function (req, res) {
 
-    Outdoor.find({ "saved": true })
+    Article.find({ "saved": true })
         .populate("notes")
         .then(function (data) {
             let hbsObject = {
@@ -60,9 +74,9 @@ router.get("/saved", function (req, res) {
         });
 });
 
-router.get("/outdoor/clear", function (req, res) {
+router.get("/news/clear", function (req, res) {
 
-    Outdoor.remove({ "saved": false })
+    Article.remove({ "saved": false })
         .then(function (err, data) {
             if (err) {
                 console.log(err);

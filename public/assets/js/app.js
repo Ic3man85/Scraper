@@ -5,7 +5,7 @@ $("#main-scraper-btn").on("click", function () {
         url: "/scrape-main",
     }).done(function (data) {
         console.log(data)
-        window.location = "/articles"
+        window.location = "/news"
     })
 });
 $("#outdoor-scraper-btn").on("click", function () {
@@ -26,30 +26,51 @@ $("#entertainment-scraper-btn").on("click", function () {
         url: "/scrape-entertainment",
     }).done(function (data) {
         console.log(data)
-        window.location = "/"
+        window.location = "/entertainment"
     })
 });
 
 $('.save-article').on("click", function () {
 
-    let newId = $('#save').attr("data-id").val();
+    let newId = $(this).attr("data-id");
     $.ajax({
         method: "POST",
-        url: "/articles/saved/" + newId
+        url: "/saved/" + newId
     }).done(function (data) {
         console.log(data)
-        window.location = "/"
+        window.location = "/saved"
     });
 });
 
-$('#delete-unsaved').on("click", function () {
+$('#delete-unsaved-news').on("click", function () {
 
-    let newId = $(this).attr("data-id");
     $.ajax({
         method: "GET",
-        url: "/clear"
+        url: "news/clear"
     }).done(function (data) {
         console.log("CLEARED");
-        window.location = "/"
+        window.location = "/news"
+    });
+});
+
+$('#delete-unsaved-outdoor').on("click", function () {
+
+    $.ajax({
+        method: "GET",
+        url: "outdoor/clear"
+    }).done(function (data) {
+        console.log("CLEARED");
+        window.location = "/outdoor"
+    });
+});
+
+$('#delete-unsaved-entertainment').on("click", function () {
+
+    $.ajax({
+        method: "GET",
+        url: "entertainment/clear"
+    }).done(function (data) {
+        console.log("CLEARED");
+        window.location = "/entertainment"
     });
 });

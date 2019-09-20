@@ -31,8 +31,9 @@ app.engine("handlebars", exphbs({
 }));
 app.set("view engine", "handlebars");
 
-let main = require("./controllers/article-controller");
+let main = require("./controllers/news-controller");
 let outdoor = require("./controllers/outdoor-controller");
+let entertain = require("./controllers/entertainment-controller");
 
 // MAIN ROUTES //////
 
@@ -62,6 +63,7 @@ app.get("/",function(req,res) {
 
 app.use("/", main);
 app.use("/", outdoor);
+app.use("/", entertain);
 // app.get("/outdoor", function (req, res) {
 
     
