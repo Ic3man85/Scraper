@@ -1,4 +1,6 @@
 <div class="main-container">
+        <button id="outdoor-scraper-btn">Scrape News</button>
+
         <div class="main-articles">
                 {{!-- <h2>Articles</h2> --}}
                 {{#each article}}
@@ -8,6 +10,7 @@
                         <p>{{body}}</p>
                         <a href={{link}} target="_blank">{{link}}</a>
                         <div class="buttons">
+                                <button id="save" class="save-article" data-id={{this._id}} type="submit">Save Article</button>
                                 <button id="note" class="note-article" type="submit">Add A Note</button>
                         </div>
                 </div>

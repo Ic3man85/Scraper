@@ -10,7 +10,7 @@ let MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/sportNews";
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 //Require models
-let db = require("./models");
+// let db = require("./models");
 
 let PORT = 3000;
 
@@ -31,180 +31,238 @@ app.engine("handlebars", exphbs({
 }));
 app.set("view engine", "handlebars");
 
-app.listen(PORT, function () {
-    console.log("App running on port " + PORT + "!");
-});
+let main = require("./controllers/article-controller");
+let outdoor = require("./controllers/outdoor-controller");
 
 // MAIN ROUTES //////
 
-app.get("/", function (req, res) {
+// app.get("/", function (req, res) {
+
+        // res.render("index");
+    
+    // db.Article.find({ "saved": false })
+    //     .then(function (data) {
+
+    //         let hbsObject = {
+    //             article: data
+    //         };
+    //         console.log(hbsObject);
+    //         res.render("index", hbsObject);
+    //     })
+    //     .catch(function (err) {
+    //         if (err) {
+    //             res.json(err);
+    //         }
+    //     });
+    
+// });
+app.get("/",function(req,res) {
+    res.render("index");
+})
+
+app.use("/", main);
+app.use("/", outdoor);
+// app.get("/outdoor", function (req, res) {
 
     
-    db.Article.find({ "saved": false })
-        .then(function (data) {
+//     db.Outdoor.find({ "saved": false })
+//         .then(function (data) {
 
-            let hbsObject = {
-                article: data
-            };
-            console.log(hbsObject);
-            res.render("index", hbsObject);
-        })
-        .catch(function (err) {
-            if (err) {
-                res.json(err);
-            }
-        });
+//             let hbsObject = {
+//                 article: data
+//             };
+//             console.log(hbsObject);
+//             res.render("outdoor", hbsObject);
+//         })
+//         .catch(function (err) {
+//             if (err) {
+//                 res.json(err);
+//             }
+//         });
     
-});
+// });
 
-app.get("/saved", function (req, res) {
+// app.get("/", function (req, res) {
 
-    db.Article.find({ "saved": true })
-        .populate("notes")
-        .then(function (data) {
-            let hbsObject = {
-                article: data
-            };
-            console.log(hbsObject);
-            res.render("saved", hbsObject);
-        });
-});
+    
+//     db.Entertainment.find({ "saved": false })
+//         .then(function (data) {
 
-app.get("/clear", function (req, res) {
+//             let hbsObject = {
+//                 article: data
+//             };
+//             console.log(hbsObject);
+//             res.send("index", hbsObject);
+//         })
+//         .catch(function (err) {
+//             if (err) {
+//                 res.json(err);
+//             }
+//         });
+    
+// });
 
-    db.Article.remove({ "saved": false })
-        .then(function (err, data) {
-            if (err) {
-                console.log(err);
-            }
-            console.log("removed")
-        });
-    db.Outdoor.remove({ "saved": false })
-        .then(function (err, data) {
-            if (err) {
-                console.log(err);
-            }
-            console.log("removed")
-        });
-    db.Entertainment.remove({ "saved": false })
-        .then(function (err, data) {
-            if (err) {
-                console.log(err);
-            }
-            console.log("removed");
-            res.redirect("/");
-        });
-});
+// app.get("/saved", function (req, res) {
 
-// ///////SCRAPES///////////
+//     db.Article.find({ "saved": true })
+//         .populate("notes")
+//         .then(function (data) {
+//             let hbsObject = {
+//                 article: data
+//             };
+//             console.log(hbsObject);
+//             res.render("saved", hbsObject);
+//         });
+// });
 
-app.get("/scrape-main", function (req, res) {
+// app.get("/clear", function (req, res) {
 
-    axios.get("https://www.ksl.com/").then(function (response) {
+//     db.Article.remove({ "saved": false })
+//         .then(function (err, data) {
+//             if (err) {
+//                 console.log(err);
+//             }
+//             console.log("removed")
+//         });
+//     db.Outdoor.remove({ "saved": false })
+//         .then(function (err, data) {
+//             if (err) {
+//                 console.log(err);
+//             }
+//             console.log("removed")
+//         });
+//     db.Entertainment.remove({ "saved": false })
+//         .then(function (err, data) {
+//             if (err) {
+//                 console.log(err);
+//             }
+//             console.log("removed");
+//             res.redirect("/");
+//         });
+// });
 
-        let $ = cheerio.load(response.data);
+// // ///////SCRAPES///////////
 
-        $(".queue_story").each(function (i, element) {
+// app.get("/scrape-main", function (req, res) {
 
-            let result = {};
+//     axios.get("https://www.ksl.com/").then(function (response) {
 
-            result.title = $(this).find("h2").text();
-            result.link = "https://www.ksl.com" + $(this).find("a").attr("href");
-            result.body = $(this).find("h5").text();
+//         let $ = cheerio.load(response.data);
 
-            db.Article.create(result)
-                .then(function (dbArticle) {
-                    console.log(dbArticle);
-                })
-                .catch(function (err) {
-                    if (err) {
-                        console.log(err);
-                    }
-                });
-        });
-        res.send("Complete");
-    });
-})
-app.get("/scrape-outdoor", function (req, res) {
+//         $(".queue_story").each(function (i, element) {
 
-    axios.get("https://www.ksl.com/news/outdoors").then(function (response) {
+//             let result = {};
 
-        let $ = cheerio.load(response.data);
+//             result.title = $(this).find("h2").text();
+//             result.link = "https://www.ksl.com" + $(this).find("a").attr("href");
+//             result.body = $(this).find("h5").text();
 
-        $(".queue_story").each(function (i, element) {
+//             db.Article.create(result)
+//                 .then(function (dbArticle) {
+//                     console.log(dbArticle);
+//                 })
+//                 .catch(function (err) {
+//                     if (err) {
+//                         console.log(err);
+//                     }
+//                 });
+//         });
+//         res.send("Complete");
+//     });
+// })
+// app.get("/scrape-outdoor", function (req, res) {
 
-            let result = {};
+//     axios.get("https://www.ksl.com/news/outdoors").then(function (response) {
 
-            result.title = $(this).find("h2").text();
-            result.link = "https://www.ksl.com/news/outdoors" + $(this).find("a").attr("href");
-            result.body = $(this).find("h5").text();
+//         let $ = cheerio.load(response.data);
 
-            db.Outdoor.create(result)
-                .then(function (dbOutdoor) {
-                    console.log(dbOutdoor);
-                })
-                .catch(function (err) {
-                    if (err) {
-                        console.log(err);
-                    }
-                });
-        });
-        res.send("Complete");
-    });
-})
-app.get("/scrape-entertainment", function (req, res) {
+//         $(".queue_story").each(function (i, element) {
 
-    axios.get("https://www.ksl.com/news/entertainment").then(function (response) {
+//             let result = {};
 
-        let $ = cheerio.load(response.data);
+//             result.title = $(this).find("h2").text();
+//             result.link = "https://www.ksl.com/news/outdoors" + $(this).find("a").attr("href");
+//             result.body = $(this).find("h5").text();
 
-        $(".queue_story").each(function (i, element) {
+//             db.Outdoor.create(result)
+//                 .then(function (dbOutdoor) {
+//                     console.log(dbOutdoor);
+//                 })
+//                 .catch(function (err) {
+//                     if (err) {
+//                         console.log(err);
+//                     }
+//                 });
+//         });
+//         res.send("Complete");
+//     });
+// })
+// app.get("/scrape-entertainment", function (req, res) {
 
-            let result = {};
+//     axios.get("https://www.ksl.com/news/entertainment").then(function (response) {
 
-            result.title = $(this).find("h2").text();
-            result.link = "https://www.ksl.com/news/entertainment" + $(this).find("a").attr("href");
-            result.body = $(this).find("h5").text();
+//         let $ = cheerio.load(response.data);
 
-            db.Entertainment.create(result)
-                .then(function (dbEntertainment) {
-                    console.log(dbEntertainment);
-                })
-                .catch(function (err) {
-                    if (err) {
-                        console.log(err);
-                    }
-                });
-        });
-        res.send("Complete");
-    });
-})
+//         $(".queue_story").each(function (i, element) {
 
-app.get("/articles", function (req, res) {
+//             let result = {};
 
-    db.Article.find({})
-        .then(function (dbArticle) {
+//             result.title = $(this).find("h2").text();
+//             result.link = "https://www.ksl.com/news/entertainment" + $(this).find("a").attr("href");
+//             result.body = $(this).find("h5").text();
 
-            res.json(dbArticle);
-        }).catch(function (err) {
+//             db.Entertainment.create(result)
+//                 .then(function (dbEntertainment) {
+//                     console.log(dbEntertainment);
+//                 })
+//                 .catch(function (err) {
+//                     if (err) {
+//                         console.log(err);
+//                     }
+//                 });
+//         });
+//         res.send("Complete");
+//     });
+// })
 
-            res.json(err);
-        });
-});
+// app.get("/articles", function (req, res) {
 
-app.post("/articles/saved/:id", function (req, res) {
+//     db.Article.find({})
+//         .then(function (dbArticle) {
 
-    db.Article.findOneAndUpdate({ "_id": req.params.id }, { "saved": true })
-        .then(function (dbArticle) {
+//             res.json(dbArticle);
+//         }).catch(function (err) {
 
-            res.send(dbArticle);
-        })
-        .catch(function (err) {
-            if (err) {
-                console.log(err);
-            }
-        });
-});
+//             res.json(err);
+//         });
+// });
+
+// app.get("/outdoor", function (req, res) {
+
+//     db.Outdoor.find({})
+//         .then(function (dbOutdoor) {
+
+//             res.json(dbOutdoor);
+//             res.render("outdoor");
+//         }).catch(function (err) {
+
+//             res.json(err);
+//         });
+// });
+
+// app.post("/articles/saved/:id", function (req, res) {
+
+//     db.Article.findOneAndUpdate({ "_id": req.params.id }, { "saved": true })
+//         .then(function (dbArticle) {
+
+//             res.send(dbArticle);
+//         })
+//         .catch(function (err) {
+//             if (err) {
+//                 console.log(err);
+//             }
+//         });
+// });
 
 
 //////  POST ROUTES /////
@@ -217,3 +275,6 @@ app.post("/articles/saved/:id", function (req, res) {
 
 
 
+app.listen(PORT, function () {
+    console.log("App running on port " + PORT + "!");
+});

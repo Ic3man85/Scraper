@@ -1,53 +1,54 @@
-$("#main-scraper-btn").on("click", function() {
+$("#main-scraper-btn").on("click", function () {
 
     $.ajax({
         method: "GET",
         url: "/scrape-main",
-    }).done(function(data) {
+    }).done(function (data) {
         console.log(data)
-        window.location = "/"
+        window.location = "/articles"
     })
 });
-$("#outdoor-scraper-btn").on("click", function() {
-
+$("#outdoor-scraper-btn").on("click", function () {
     $.ajax({
         method: "GET",
         url: "/scrape-outdoor",
-    }).done(function(data) {
+    }).done(function (data) {
         console.log(data)
-        window.location = "/"
+        window.location = "/outdoor"
+        
     })
-});
-$("#entertainment-scraper-btn").on("click", function() {
 
+
+});
+$("#entertainment-scraper-btn").on("click", function () {
     $.ajax({
         method: "GET",
         url: "/scrape-entertainment",
-    }).done(function(data) {
+    }).done(function (data) {
         console.log(data)
         window.location = "/"
     })
 });
 
-$('#save').on("click",function() {
+$('.save-article').on("click", function () {
 
-    let newId = $(this).attr("data-id");
+    let newId = $('#save').attr("data-id").val();
     $.ajax({
-         method: "POST",
-         url: "/articles/saved/" + newId
-    }).done(function(data) {
+        method: "POST",
+        url: "/articles/saved/" + newId
+    }).done(function (data) {
         console.log(data)
         window.location = "/"
     });
 });
 
-$('#delete-unsaved').on("click",function(){
+$('#delete-unsaved').on("click", function () {
 
     let newId = $(this).attr("data-id");
     $.ajax({
         method: "GET",
         url: "/clear"
-    }).done(function(data) {
+    }).done(function (data) {
         console.log("CLEARED");
         window.location = "/"
     });

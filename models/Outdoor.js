@@ -19,6 +19,11 @@ let OutdoorSchema = new Schema({
         type: String
     },
 
+    saved: {
+        type: Boolean,
+        default: false
+    },
+
     note: {
         type: Schema.Types.ObjectId,
         ref: "note"
