@@ -12,9 +12,9 @@ let NoteSchema = new Schema({
         type: String
     },
 
-    saved: {
-        type: Boolean,
-        default: false
+    article: {
+        type: Schema.Types.ObjectId,
+        ref: "Article"
     }
 });
 

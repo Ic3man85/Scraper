@@ -1,19 +1,16 @@
 <div class="main-container">
         <div class="main-articles">
-                {{!-- <h2>Articles</h2> --}}
-                {{#each article}}
-                <div class="articles">
+                <p>This app scrape's Ksl.com, based on the topic that you would like to read articles
+                        from. Your choices are News, Outdoor, and Entertainment, once you choose your
+                        topic click the link and you will be redirected to that page. Once at the page 
+                        you want, just click the scrape articles button. Articles will be displayed on 
+                        the screen, click save button if would like to save the article to come back to 
+                        later, also you can click the add note button if you would like to leave a comment
+                        about the article. Once you decide you want the unsaved articles to go away, just 
+                        click the button.
 
-                        <h3>{{title}}</h3>
-                        <p>{{body}}</p>
-                        <a href={{link}} target="_blank">{{link}}</a>
-                        <div class="buttons">
-                                <button id="save" class="save-article" data-id={{this._id}} type="submit">Save Article</button>
-                                <button id="note" class="note-article" type="submit">Add A Note</button>
-                        </div>
-                </div>
-
-                {{/each}}
+                        Thanks for taking a look!!!
+                </p>
         </div>
         <div class="notes"></div>
 </div>

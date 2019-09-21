@@ -3,23 +3,28 @@ $("#main-scraper-btn").on("click", function () {
     $.ajax({
         method: "GET",
         url: "/scrape-main",
-    }).done(function (data) {
+    }).done(function (err,data) {
+        if(err) {
+            console.log(err);
+        }
         console.log(data)
         window.location = "/news"
     })
 });
+
 $("#outdoor-scraper-btn").on("click", function () {
     $.ajax({
         method: "GET",
         url: "/scrape-outdoor",
-    }).done(function (data) {
+    }).done(function (err,data) {
+        if (err) {
+            console.log(err);
+        }
         console.log(data)
         window.location = "/outdoor"
-        
     })
-
-
 });
+
 $("#entertainment-scraper-btn").on("click", function () {
     $.ajax({
         method: "GET",

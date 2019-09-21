@@ -46,6 +46,38 @@ router.get("/scrape-main", function (req, res) {
     });
 });
 
+router.get("/news/:id", function (req, res) {
+
+    Article.findOne({ "_id": req.params.id })
+        
+        .populate("note")
+        .then(function (error, data) {
+            
+            if (error) {
+                console.log(error);
+            }
+            else {
+                res.json(data);
+            }
+        });
+});
+router.get("/api/news", function (req, res) {
+
+    Article.find({saved: false })
+        
+        .populate("note")
+        .then(function (error, data) {
+            
+            if (error) {
+                console.log(error);
+            }
+            else {
+                res.json(data);
+            }
+        });
+});
+
+
 router.post("/saved/:id", function (req, res) {
 
         Article.findOneAndUpdate({ "_id": req.params.id }, { "saved": true })
