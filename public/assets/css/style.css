@@ -123,3 +123,8 @@ button {
 #delete-unsaved {
     margin-top: 30px;
 }
+
+.modal {
+    width: 400px;
+    height: 400px;
+}
