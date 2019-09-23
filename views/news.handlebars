@@ -1,7 +1,5 @@
 <div class="main-container">
-        <button id="main-scraper-btn">Scrape News</button>
-        <button id="delete-unsaved-news">Delete Unsaved</button>
-
+       
         <div class="main-articles">
                 {{!-- <h2>Articles</h2> --}}
                 {{#each article}}
@@ -11,17 +9,10 @@
                         <p>{{body}}</p>
                         <a href={{link}} target="_blank">{{link}}</a>
                         <div class="buttons">
-                                <button id="save" class="save-article" data-id={{this._id}} type="submit">Save Article</button>
-                                <a href="#add-note" rel="modal:open"><button>Add Note</button></a>
+                                <button id="save" class="save-news" data-id={{this._id}} type="submit">Save Article</button>
                         </div>
                 </div>
 
                 {{/each}}
-        </div>
-        <div class="notes">
-                <div id="add-note" class="modal">
-                        <p>Thanks for clicking. That felt good.</p>
-                        <a href="#" rel="modal:close">Close</a>
-                </div>
         </div>
 </div>
