@@ -15,7 +15,7 @@ mongoose.connect(MONGODB_URI, {
     useUnifiedTopology: true,
 });
 
-let PORT = 3000;
+let PORT = 5000;
 
 let app = express();
 
