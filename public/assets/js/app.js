@@ -14,60 +14,46 @@ $("#main-scraper-btn").on("click", function () {
 
 $('.save-news').on("click", function () {
 
-        let newId = $(this).attr("data-id");
-        $.ajax({
-            method: "POST",
-            url: "news/saved/" + newId
-        }).done(function (data) {
-            console.log(data)
-            window.loction = "/"
-        });
+    let newId = $(this).attr("data-id");
+    $.ajax({
+        method: "POST",
+        url: "/news/saved/" + newId
+    }).done(function (data) {
+        console.log(data)
+        window.loction = "/"
+    });
 });
 
-$("#delete-unsaved-news").on("click", function() {
+$("#delete-unsaved-news").on("click", function () {
     $.ajax({
         method: "GET",
         url: "/clear"
-    }).done(function(data) {
+    }).done(function (data) {
         console.log("CLEAR")
         window.location = '/'
     })
 })
 
-$(".save-note").on("click", function() {
-    var thisId = $(this).attr("data-id");
-    if (!$("#note-body" + thisId).val()) {
+$(".save-note").on("click", function () {
+    let thisId = $(this).attr("data-id");
+    if (!$("#note-Body" + thisId).val()) {
         alert("please enter a note to save")
-    }else {
-      $.ajax({
+    } else {
+        $.ajax({
             method: "POST",
             url: "/notes/saved/" + thisId,
             data: {
-              text: $("#note-body" + thisId).val()
+                text: $("#note-Body" + thisId).val()
             }
-          }).done(function(data) {
-              console.log(data);
-              $("#note-Body" + thisId).val("");
-              $(".modalNote").modal("hide");
-              window.location = "/saved"
-          });
+        }).done(function (data) {
+            console.log(data);
+            $("#note-Body" + thisId).val("");
+            $(".modalNote").modal("hide");
+            window.location = "/saved"
+        });
     }
 });
 
-$(".delete-note-btn").on("click", function() {
-    var noteId = $(this).attr("data-note-id");
-    var articleId = $(this).attr("data-article-id");
-    $.ajax({
-        method: "DELETE",
-        url: "/notes/delete/" + noteId + "/" + articleId
-    }).done(function(data) {
-        console.log(data)
-        $(".modalNote").modal("hide");
-        window.location = "/saved"
-    })
-});
 
 
-
-//dfjkskldfjsdjf
 

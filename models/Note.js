@@ -8,10 +8,10 @@ let NoteSchema = new Schema({
         type: String
     },
 
-    article: {
+    article: [{
         type: Schema.Types.ObjectId,
         ref: "Article"
-    }
+    }]
 });
 
 let Note = mongoose.model("Note", NoteSchema);

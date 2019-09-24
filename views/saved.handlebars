@@ -8,40 +8,36 @@
                         <p>{{body}}</p>
                         <a href={{link}} target="_blank">{{link}}</a>
                         <div class="buttons">
-                                <a href="#add-note" rel="modal:open" data-toggle="modal"
-                                        data-target="#noteModal{{this._id}}" data-id="{{this._id}}"><button>Add A
-                                                Note</button></a>
+                                <a href="#add-note" rel="modal:open" data-toggle="modal" data-target="modal"
+                                        data-id={{this._id}}><button>Add Note</button></a>
                         </div>
                 </div>
                 {{/each}}
         </div>
+</div>
 
-        <div id="add-note" class="modal">
-
-                <div class="modal-header">
-                        <h4 class="modal-title">{{this.title}}</h4>
+<div id="add-note" class="modal">
+        <div class="modal-header">
+                <h4>{{this.title}}</h4>
+        </div>
+        <div class="modal-body">
+                {{#if this.notes}}
+                {{#each this.notes}}
+                <div class="note-body">
+                        <p class="previousNotes"> {{this.body}}</p>
+                        <button type="button" class="delete-note-btn" data-note-id={{this._id}}
+                                data-article-id={{this.article}}>
+                        </button>
                 </div>
-                <div class="modal-body">
-                        {{#if this.note}}
-                        {{#each this.note}}
-                        <div class="note-body">
-                                <p class="previousNotes"> {{this.body}}</p>
-                                <button type="button" class="delete-note-btn" data-note-id={{this._id}}
-                                        data-article-id={{this.article}}>
-                                </button>
-                        </div>
-                        {{/each}}
-                        {{else}}
-                        <div class="add-note-body">
-                                <h4>Add a comment!</h4>
-                        </div>
-                        {{/if}}
-                </div>
-                <div>
-                        <textarea id="note-body{{this._id}}" placeholder="New Note"></textarea>
-                </div>
-                <div class="modal-footer">
-                        <button type="button" class="save-note" data-id={{this._id}}>Save Note</button>
-                </div>
+                {{/each}}
+                {{else}}
+                <h4>Add a comment!</h4>
+                {{/if}}
+        </div>
+        <div>
+                <textarea id="note-Body{{this._id}}" placeholder="New Note"></textarea>
+        </div>
+        <div class="modal-footer">
+                <button type="button" class="save-note" data-id={{this._id}}>Save Note</button>
         </div>
 </div>

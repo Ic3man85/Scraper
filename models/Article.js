@@ -24,10 +24,10 @@ let ArticleSchema = new Schema({
         default: false
     },
 
-    notes: {
+    notes: [{
         type: Schema.Types.ObjectId,
         ref: "Note"
-    } 
+    }] 
 });
 
 ArticleSchema.plugin(uniqueValidator);
