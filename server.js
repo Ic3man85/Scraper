@@ -7,7 +7,7 @@ let axios = require('axios');
 let cheerio = require('cheerio');
 
 
-let MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/News";
+let MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
@@ -15,7 +15,7 @@ mongoose.connect(MONGODB_URI, {
     useUnifiedTopology: true,
 });
 
-let PORT = 5000;
+var PORT = 3000;
 
 let app = express();
 
