@@ -23,7 +23,7 @@ app.use(logger("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.use(express.static("/public"));
+app.use(express.static(__dirname + "/public"));
 
 let exphbs = require("express-handlebars");
 
