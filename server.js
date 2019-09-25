@@ -152,13 +152,13 @@ app.post("/notes/saved/:id", function (req, res) {
         article: req.params.id
     });
     console.log(req.body)
-    newNote.save(function (error, note) {
+    newNote.save(function (error, data) {
 
         if (error) {
             console.log(error);
         }
         else {
-            Article.findOneAndUpdate({ "_id": req.params.id }, { $push: { "notes": note } })
+            Article.findOneAndUpdate({ "_id": req.params.id }, { $push: { "notes": data } })
                 .exec(function (err) {
 
                     if (err) {
@@ -166,7 +166,7 @@ app.post("/notes/saved/:id", function (req, res) {
                         res.send(err);
                     }
                     else {
-                        res.send(note);
+                        res.send(data);
                     }
                 });
         }

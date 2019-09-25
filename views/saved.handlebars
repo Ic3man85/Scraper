@@ -8,15 +8,16 @@
                         <p>{{body}}</p>
                         <a href={{link}} target="_blank">{{link}}</a>
                         <div class="buttons">
-                                <a href="#add-note" rel="modal:open" data-toggle="modal" data-target="modal"
-                                        data-id={{_id}}><button>Add Note</button></a>
+                                <a href="#add-note" rel="modal:open" data-toggle="modal"
+                                        data-target="#add-note{{this._id}}" data-id={{this._id}}><button>Add
+                                                Note</button></a>
                         </div>
                 </div>
                 {{/each}}
         </div>
 </div>
-
-<div id="add-note" class="modal">
+{{#each article}}
+<div id="add-note{{this_id}}" class="modal">
         <div class="modal-header">
                 <h4>{{this.title}}</h4>
         </div>
@@ -24,10 +25,10 @@
                 {{#if this.notes}}
                 {{#each this.notes}}
                 <div class="note-body">
-                        <p class="previousNotes"> {{this.body}}</p>
-                        <button type="button" class="delete-note-btn" data-note-id={{this._id}}
+                        <p class="previousNotes"> {{this.text}}</p>
+                        {{!-- <button type="button" class="delete-note-btn" data-note-id={{this._id}}
                                 data-article-id={{this.article}}>
-                        </button>
+                        </button> --}}
                 </div>
                 {{/each}}
                 {{else}}
@@ -40,4 +41,5 @@
         <div class="modal-footer">
                 <button type="button" class="save-note" data-id={{this._id}}>Save Note</button>
         </div>
+        {{/each}}
 </div>
