@@ -23,7 +23,7 @@ app.use(logger("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.use(express.static(__dirname + "/public"));
+app.use(express.static("/public"));
 
 let exphbs = require("express-handlebars");
 
@@ -194,6 +194,11 @@ app.delete("/notes/delete/:note_id/:news_id", function (req, res) {
     });
 });
 
-app.listen(PORT, function () {
-    console.log("App running on port " + PORT);
+app.set('port', PORT);
+app.listen(app.get('port'), function() {
+ console.log("listening to Port", app.get("port"));
 });
+
+// app.listen(PORT, function () {
+//     console.log("App running on port " + PORT);
+// });
